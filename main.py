@@ -1,6 +1,37 @@
 import chess
 import chess.engine
+import chess.svg
+import os, sys
 import random
+
+
+from PyQt5.QtSvg import QSvgWidget
+from PyQt5.QtWidgets import QApplication, QWidget
+
+class MainWindow(QWidget):
+    def __init__(self, board):
+        super().__init__()
+
+        self.setGeometry(100, 100, 600, 600)
+
+        self.widgetSvg = QSvgWidget(parent = self)
+        self.widgetSvg.setGeometry(10, 10, 580, 580)
+
+        self.chessboard = board
+
+        self.chessboardSvg = chess.svg.board(self.chessboard, orientation=board.turn).encode("UTF-8")
+        self.widgetSvg.load(self.chessboardSvg)
+
+def showBoard(board):
+    app = QApplication([])
+    window = MainWindow(board)
+    window.show()
+    app.exec()
+
+engine_file = "stockfish_15.exe"
+if not os.path.exists(engine_file):
+    print("Engine file not found:", engine_file)
+    sys.exit()
 
 print("Welcome to Blindfold Chess")
 input_str = ' '
@@ -14,7 +45,7 @@ if in_c == 'r':
     rand_num = random.randint(0,1)
     if rand_num == 1: player_col = 'Black'
 print("You are playing as " + player_col + ".")
-engine = chess.engine.SimpleEngine.popen_uci("stockfish_15.exe")
+engine = chess.engine.SimpleEngine.popen_uci(engine_file)
 diff = -1
 while diff not in range(1,11):
     in_str = input("Enter difficulty level (1 to 10): ")
@@ -22,6 +53,10 @@ while diff not in range(1,11):
     diff = int(in_str)
 engine.configure({"Skill Level": diff})
 print("Level", str(diff), "difficulty chosen.")
+print("Type 'board' at any time to see the current board.")
+print("Type 'moves' at any time to see the legal moves.")
+print("---")
+print("Game begins.")
 board = chess.Board()
 keep_running = True
 while keep_running:
@@ -46,6 +81,15 @@ while keep_running:
         break
     if (board.turn and player_col == 'White') or (not board.turn and player_col == 'Black'):
         move = input("Enter move: ")
+        if move.lower() == "board":
+            showBoard(board)
+            continue
+        elif move.lower() == "moves":
+            legal_moves = ""
+            for i, legal_move in enumerate(board.legal_moves):
+                legal_moves += str(board.san(legal_move)) + " "
+            print("Legal moves:", legal_moves)
+            continue
         try:
             push = board.push_san(move)
             print(player_col, "(Player) moves", move)
