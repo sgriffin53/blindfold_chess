@@ -35,7 +35,7 @@ if not os.path.exists(engine_file):
 
 print("Welcome to Blindfold Chess")
 input_str = ' '
-while input_str[0] != 'w' and input_str[0] != 'b' and input_str[0] != 'r':
+while input_str[0].lower() != 'w' and input_str[0].lower() != 'b' and input_str[0].lower() != 'r':
     input_str = input("Play as (w)hite, (b)lack, (r)andom: ")
 in_c = input_str[0]
 player_col = 'White'
@@ -53,6 +53,12 @@ while diff not in range(1,11):
     diff = int(in_str)
 engine.configure({"Skill Level": diff})
 print("Level", str(diff), "difficulty chosen.")
+show_only_last = False
+in_str = '-'
+while in_str[0].lower() != 'y' and in_str[0].lower() != 'n':
+    in_str = input("Show only last move (y/n): ")
+if in_str[0].lower() == 'y':
+    show_only_last = True
 print("Type 'board' at any time to see the current board.")
 print("Type 'moves' at any time to see the legal moves.")
 print("---")
@@ -92,6 +98,7 @@ while keep_running:
             continue
         try:
             push = board.push_san(move)
+            if show_only_last: os.system("cls")
             print(player_col, "(Player) moves", move)
         except ValueError:
             print(move, "is not a legal move.")
@@ -104,5 +111,6 @@ while keep_running:
         move = analysis.info['pv'][0]
         move_san = board.san(move)
         board.push(move)
+        if show_only_last: os.system("cls")
         print(col, "(Engine) moves", str(move_san))
 print("Thanks for playing!")
