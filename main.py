@@ -28,12 +28,20 @@ def showBoard(board):
     window.show()
     app.exec()
 
-engine_file = "stockfish_15.exe"
+engine_file = "/home/p/Documents/code/blindfold_chess/stockfish_15.exe"
 if not os.path.exists(engine_file):
     print("Engine file not found:", engine_file)
     sys.exit()
 
 print("Welcome to Blindfold Chess")
+puzzle_input_str = ' '
+while puzzle_input_str[0].lower() != 'p' and puzzle_input_str[0].lower() != 'g':
+    puzzle_input_str = input("Select (g)ame or (p)uzzles: ")
+    
+if puzzle_input_str == 'p':
+    import puzzles 
+    puzzles.run_puzzles(puzzles.puzzles_mate1)
+    
 input_str = ' '
 while input_str[0].lower() != 'w' and input_str[0].lower() != 'b' and input_str[0].lower() != 'r':
     input_str = input("Play as (w)hite, (b)lack, (r)andom: ")
