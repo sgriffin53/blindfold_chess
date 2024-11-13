@@ -29,3 +29,12 @@ Example output:
     White (Player) moves Nf3
     Black (Engine) moves Nf6
     Enter move:
+    
+On Ubuntu you may need to specify the absolute path to stockfish_15.exe in main.py
+
+On Ubuntu you may need to change permissions to execute stockfish.exe, e.g. by running: 
+
+```
+chmod +rwx stockfish_15.exe
+```
+
