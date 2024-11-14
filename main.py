@@ -39,8 +39,12 @@ while puzzle_input_str[0].lower() != 'p' and puzzle_input_str[0].lower() != 'g':
     puzzle_input_str = input("Select (g)ame or (p)uzzles: ")
     
 if puzzle_input_str == 'p':
+    puzzle_order = ' '
+    while puzzle_order[0].lower() != 's' and puzzle_order[0].lower() != 'r':
+        puzzle_order = input("Complete puzzles (s)equentially or in (r)andom order: ")
+    order = puzzle_order[0].lower()
     import puzzles 
-    puzzles.run_puzzles(puzzles.puzzles_mate1)
+    puzzles.run_puzzles(puzzles.puzzles_mate1, order)
     
 input_str = ' '
 while input_str[0].lower() != 'w' and input_str[0].lower() != 'b' and input_str[0].lower() != 'r':
