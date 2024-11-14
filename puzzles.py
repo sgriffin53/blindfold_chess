@@ -30,6 +30,7 @@ puzzles_mate1 = {
 
 def run_puzzles(puzzles_mate1):
     for puzzle_num in puzzles_mate1.keys():
+        print(f"\n______________________________________________")
         print(f"\nPuzzle number {puzzle_num} - Checkmate in 1:")
         print(puzzles_mate1[puzzle_num][0])
 
