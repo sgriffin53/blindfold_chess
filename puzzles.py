@@ -1,4 +1,5 @@
 
+import random 
 
 puzzles_mate1 = {
     1: ["    White: King e6 / Rook a2\n    Black: King e8", "ra8", "w"],
@@ -26,10 +27,12 @@ puzzles_mate1 = {
     23: ["    White: King g1 / Queen a5 / Rook d7 / Pawns a2 & c3 & f2 & g2 & h4\n    Black: King f6 / Queen e4 / Rooks c4 & h8 / Pawns a6 & b7 & e6 & g6 & h7", "qg5", "w"],
     24: ["    White: King b5 / Queen c8 / Bishop a1 \n    Black: King d5 / Queen g1 / Pawn a3", "qc6", "w"]
     }
-    
 
-def run_puzzles(puzzles_mate1):
+
+def run_puzzles(puzzles_mate1, order):
     for puzzle_num in puzzles_mate1.keys():
+        if order == "r":
+            break
         print(f"\n______________________________________________")
         print(f"\nPuzzle number {puzzle_num} - Checkmate in 1:")
         print(puzzles_mate1[puzzle_num][0])
@@ -46,5 +49,29 @@ def run_puzzles(puzzles_mate1):
         continue_str = " "
         while continue_str != "":
             continue_str = input("Press Enter to continue...")
+    if order == "r":
+        all_puzzles = list(puzzles_mate1.keys())
+        while all_puzzles:
+            random_puzzle = random.choice(all_puzzles)
+            all_puzzles.remove(random_puzzle)
+            print(f"\n______________________________________________")
+            print(f"\nCheckmate in 1:")
+            print(puzzles_mate1[random_puzzle][0])
+            correct_result = puzzles_mate1[random_puzzle][1]
+            colour_to_move = puzzles_mate1[random_puzzle][2]
+        
+            answer_input_str= ""
+            while (answer_input_str.lower() != correct_result) and (colour_to_move == "w"):
+                answer_input_str = input("Enter your move for White:")
+            while (answer_input_str.lower() != correct_result) and (colour_to_move == "b"):
+                answer_input_str = input("Enter your move for Black:")  
+            print("\n*** Well done! That's the correct answer ***")
+            continue_str = " "
+            while continue_str != "":
+                continue_str = input("Press Enter to continue...")
+
     print("\nThat's the last puzzle.\n")
+    
+    
+    
 
