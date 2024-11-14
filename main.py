@@ -28,7 +28,7 @@ def showBoard(board):
     window.show()
     app.exec()
 
-engine_file = "/home/p/Documents/code/blindfold_chess/stockfish_15.exe"
+engine_file = "stockfish_15.exe"
 if not os.path.exists(engine_file):
     print("Engine file not found:", engine_file)
     sys.exit()
