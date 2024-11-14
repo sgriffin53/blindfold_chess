@@ -44,11 +44,8 @@ Sample puzzle:
 
 ```
 Puzzle number 1 - Checkmate in 1:
-
     White: King e6 / Rook a2
-    
     Black: King e8
-    
 Enter your move for White:
 ```
 
